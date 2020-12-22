@@ -48,7 +48,7 @@ def webhook_handler():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        print(f"\nFSM STATE: {machine.state}")
+        # print(f"\nFSM STATE: {machine.state}")
         # print(f"REQUEST BODY: \n{body}")
 
         response = machine.advance(event)
