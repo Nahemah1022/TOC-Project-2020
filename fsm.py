@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 
 from transitions.extensions import GraphMachine
 from linebot.models import MessageEvent, PostbackEvent, TextSendMessage
@@ -11,10 +12,11 @@ from Firestorage import Firestorage
 class TocMachine(GraphMachine):
     def __init__(self):
         configs = json.load(open(f'./config.json'))
+        print(configs)
         
         self.base_url = configs['base_url']
         self.gmap = GoogleMaps(configs['googlemap_api_key'])
-        self.db = Firestorage(config['firebase_url'])
+        self.db = Firestorage(configs['firebase_url'])
 
         self.machine = GraphMachine(
             model=self, 
