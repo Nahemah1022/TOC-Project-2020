@@ -12,7 +12,7 @@ from Firestorage import Firestorage
 class TocMachine(GraphMachine):
     def __init__(self):
         configs = json.load(open(f'./config.json'))
-        print(configs)
+        # print(configs)
         
         self.base_url = configs['base_url']
         self.gmap = GoogleMaps(configs['googlemap_api_key'])
