@@ -21,7 +21,7 @@ class GoogleMaps():
         for location in res.json()['results']:
             if location['opening_hours']['open_now']:
                 results.append({
-                    'name': re.sub('\W+', '', location['name']).replace(chr(160), " "),
+                    'name': re.sub('\W+', '', location['name']).replace(chr(160), " ")[:30],
                     'place_id': location['place_id'],
                     'preview_url': self.get_photo(location['photos'][0]['photo_reference']).replace(chr(160), " "),
                     'rating': location['rating'],
