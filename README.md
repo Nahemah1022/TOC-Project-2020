@@ -1,6 +1,6 @@
 # NearRest (TOC Project 2020)
 
-![](https://i.imgur.com/GVsgMmX.jpg)
+![](https://i.imgur.com/S1GHFgf.png)
 
 > The NearRest Line Bot!
 
