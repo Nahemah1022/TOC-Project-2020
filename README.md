@@ -54,6 +54,19 @@ This LINE bot is mostly built by [LINE messaging API](https://developers.line.bi
 - Type text message "Graph" (case-insensitive), bot will reply you an image about FSM of this bot.
 
 	![](https://i.imgur.com/PnnNhrl.png)
+	- Input: location information
+		- Reply: a button carousel templates of places nearby
+		- go back to user
+	- Input: "加到我的最愛" button in carousel templates
+		- Reply: `已將${place name}加入我的最愛`
+		- go back to user
+	- Input: text message "List":
+		- Reply: a button carousel templates of your favorite places in database
+		- go back to user
+	- Input: text message "Graph":
+		- show FSM graph
+		- go back to user
+
 
 ## Technics Applied
 ### Google Map API for Place Search
