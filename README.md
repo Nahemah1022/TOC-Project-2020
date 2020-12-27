@@ -1,159 +1,63 @@
-# TOC Project 2020
+# NearRest (TOC Project 2020)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/dc7fa47fcd809b99d087/maintainability)](https://codeclimate.com/github/NCKU-CCS/TOC-Project-2020/maintainability)
+![](https://i.imgur.com/GVsgMmX.jpg)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020/badge.svg)](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020)
+> The NearRest Line Bot!
 
+---
 
-Template Code for TOC Project 2020
+## Introduction to this project
 
-A Line bot based on a finite state machine
+Search bset reviewed restaurant nearby you, add to your favorite list, view in Google Map, lookup the states. Line [button carousel templates](https://developers.line.biz/en/reference/messaging-api/#buttons) are used. Instead of typing bunch of word to the LINE bot, you can just simply **press buttons** on the carousel template!.
 
-More details in the [Slides](https://hackmd.io/@TTW/ToC-2019-Project#) and [FAQ](https://hackmd.io/s/B1Xw7E8kN)
+This LINE bot is mostly built by [LINE messaging API](https://developers.line.biz/en/docs/messaging-api/overview/), and a little [Flask](https://flask.palletsprojects.com/en/1.1.x/) as web application framework to host it on Heroku.
 
-## Setup
+---
 
-### Prerequisite
-* Python 3.6
-* Pipenv
-* Facebook Page and App
-* HTTPS Server
+## How to Use
+### 1. Open QR code scanner on your phone, and scan this following picture
 
-#### Install Dependency
-```sh
-pip3 install pipenv
+![](https://i.imgur.com/E5nT1Ni.png)
 
-pipenv --three
+### 2. Add NearRest to Your Friend
 
-pipenv install
+![](https://i.imgur.com/cBoYvw9.png)
 
-pipenv shell
-```
+---
 
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-	* [Note: macOS Install error](https://github.com/pygraphviz/pygraphviz/issues/100)
+## Features
+### Search Restaurants Nearby
+- Navigate to this Line bot chatroom
+- Press the "Plus" icon at left bottom for sending advanced information to this bot
 
+	![](https://i.imgur.com/zXBTnPZ.png)
+- Click "位置資訊" and slide to location you want to search, then press the address to send it out
 
-#### Secret Data
-You should generate a `.env` file to set Environment Variables refer to our `.env.sample`.
-`LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
+	![](https://i.imgur.com/KgIpvCw.png)
 
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
+- Just wait a few second for API response, you will get a bunch of restaurants nearby!
 
-#### a. Ngrok installation
-* [ macOS, Windows, Linux](https://ngrok.com/download)
-
-or you can use Homebrew (MAC)
-```sh
-brew cask install ngrok
-```
-
-**`ngrok` would be used in the following instruction**
-
-```sh
-ngrok http 8000
-```
-
-After that, `ngrok` would generate a https URL.
-
-#### Run the sever
-
-```sh
-python3 app.py
-```
-
-#### b. Servo
-
-Or You can use [servo](http://serveo.net/) to expose local servers to the internet.
+	![](https://i.imgur.com/FGrahOS.png)
 
 
-## Finite State Machine
-![fsm](./img/show-fsm.png)
+### Add to Favorite List
+- Select some restaurants you intreseted in, then click "加入我的最愛" button in carousel templates.
+- Type text message "List" (case-insensitive), bot will reply your favorite list
+	![](https://i.imgur.com/hGPxvnx.png)
 
-## Usage
-The initial state is set to `user`.
+- You can also click "從最愛中移除" button to delete these items
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+### View in Google Map
+- Click "到Google Map中查看", this location will be shown in Google Map App (if you installed this app on your phone)
 
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+### Lookup the States
+- Type text message "Graph" (case-insensitive), bot will reply you an image about FSM of this bot.
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+	![](https://i.imgur.com/PnnNhrl.png)
 
-## Deploy
-Setting to deploy webhooks on Heroku.
+## Technics Applied
+### Google Map API for Place Search
+![](https://i.imgur.com/CC21tCL.png)
 
-### Heroku CLI installation
-
-* [macOS, Windows](https://devcenter.heroku.com/articles/heroku-cli)
-
-or you can use Homebrew (MAC)
-```sh
-brew tap heroku/brew && brew install heroku
-```
-
-or you can use Snap (Ubuntu 16+)
-```sh
-sudo snap install --classic heroku
-```
-
-### Connect to Heroku
-
-1. Register Heroku: https://signup.heroku.com
-
-2. Create Heroku project from website
-
-3. CLI Login
-
-	`heroku login`
-
-### Upload project to Heroku
-
-1. Add local project to Heroku project
-
-	heroku git:remote -a {HEROKU_APP_NAME}
-
-2. Upload project
-
-	```
-	git add .
-	git commit -m "Add code"
-	git push -f heroku master
-	```
-
-3. Set Environment - Line Messaging API Secret Keys
-
-	```
-	heroku config:set LINE_CHANNEL_SECRET=your_line_channel_secret
-	heroku config:set LINE_CHANNEL_ACCESS_TOKEN=your_line_channel_access_token
-	```
-
-4. Your Project is now running on Heroku!
-
-	url: `{HEROKU_APP_NAME}.herokuapp.com/callback`
-
-	debug command: `heroku logs --tail --app {HEROKU_APP_NAME}`
-
-5. If fail with `pygraphviz` install errors
-
-	run commands below can solve the problems
-	```
-	heroku buildpacks:set heroku/python
-	heroku buildpacks:add --index 1 heroku-community/apt
-	```
-
-	refference: https://hackmd.io/@ccw/B1Xw7E8kN?type=view#Q2-如何在-Heroku-使用-pygraphviz
-
-## Reference
-[Pipenv](https://medium.com/@chihsuan/pipenv-更簡單-更快速的-python-套件管理工具-135a47e504f4) ❤️ [@chihsuan](https://github.com/chihsuan)
-
-[TOC-Project-2019](https://github.com/winonecheng/TOC-Project-2019) ❤️ [@winonecheng](https://github.com/winonecheng)
-
-Flask Architecture ❤️ [@Sirius207](https://github.com/Sirius207)
-
-[Line line-bot-sdk-python](https://github.com/line/line-bot-sdk-python/tree/master/examples/flask-echo)
+### Firebase Realtime Database for Storing User Data
+![](https://i.imgur.com/ImmdA2S.png)
